@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0;
+      }
+
+      #holographic {
+        height: 100vh;
+        width: 100vw;
+        background-image: linear-gradient(
+          to right,
+          rgb(194, 255, 182),
+          rgb(255, 163, 182),
+          rgb(221, 169, 255),
+          rgb(162, 209, 255)
+        );
+        background-size: 200%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="holographic"></div>
+    <script>
+      window.addEventListener("deviceorientation", handleOrientation, true);
+      function handleOrientation(event) {
+        const z = event.alpha; // rotation degrees from 0 to 360
+
+        const holographicElement = document.getElementById("holographic");
+        holographicElement.style.backgroundPosition =
+          Math.min(Math.abs(z), 100) + "%";
+      }
+    </script>
+  </body>
+</html>
