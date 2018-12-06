@@ -26,16 +26,30 @@
     </style>
   </head>
   <body>
-    <div id="holographic"></div>
+    <div id="holographic" onmousemove="handleMouseMove(event)"></div>
     <script>
-      window.addEventListener("deviceorientation", handleOrientation, true);
-      function handleOrientation(event) {
-        const z = event.alpha; // rotation degrees from 0 to 360
+      const holographicElement = document.getElementById("holographic");
+      const thresholdWidth = 100;
 
-        const holographicElement = document.getElementById("holographic");
+      function updateHolographicBackground(value) {
         holographicElement.style.backgroundPosition =
-          Math.min(Math.abs(z), 100) + "%";
+          value + "%";
       }
+
+      function handleMouseMove(event) {
+        const x = event.clientX;
+        const width = document.documentElement.clientWidth;
+        const value = (x / width) * thresholdWidth;
+        updateHolographicBackground(value);
+      }
+
+      function handleDeviceOrientation(event) {
+        const z = Math.abs(event.alpha); // rotation degrees from 0 to 360
+        const value = (z / 360) * thresholdWidth
+        updateHolographicBackground(value);
+      }
+
+      window.addEventListener("deviceorientation", handleDeviceOrientation, true);
     </script>
   </body>
 </html>
